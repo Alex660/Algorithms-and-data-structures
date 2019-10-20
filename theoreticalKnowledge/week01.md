@@ -186,3 +186,22 @@
       + cas + 数组 
 + 其它应用
   + 分布式应用中的消息队列 如 kafka
++ 源码分析
+  + [Java](http://fuseyism.com/classpath/doc/java/util/Queue-source.html) 
+    ![](https://images2017.cnblogs.com/blog/1182892/201711/1182892-20171122100317930-842768608.png) 
+    + Queue
+      + java.util.Collection接口的子类型 
+      + 方法
+        + add  
+          + 增加一个元索  如果队列已满，则抛出一个IIIegaISlabEepeplian异常
+        + remove  
+          + 移除并返回队列头部的元素  如果队列为空，则抛出一个NoSuchElementException异常
+        + element  
+          + 返回队列头部的元素 如果队列为空，则抛出一个NoSuchElementException异常
+        + offer  
+          + 添加一个元素并返回true 如果队列已满，则返回false
+        + poll   
+          + 移除并返问队列头部的元素 如果队列为空，则返回null
+        + peek    
+          + 返回队列头部的元素 如果队列为空，则返回null
+      + PriorityQueue 
