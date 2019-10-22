@@ -1,5 +1,7 @@
 # 摘要
 + 哈希表、映射、集合
++ 树、二叉树、二叉搜索树、图(Graph)
++ 课后思考
 + 源码分析
 
 ### 哈希表、映射、集合  
@@ -42,6 +44,81 @@
     + 以第一个字符串数组构建散列表，key 为字符串，value 为出现次数。
     + 再遍历第二个字符串数组，以字符串为 key 在散列表中查找，
     + 如果 value 大于零，说明存在相同字符串。时间复杂度 O(N)。
+
+
+
+### 树
++ 一种非线性表结构
+  + 高度(Height)
+  + 深度(Depth)
+  + 层  (Level)
+    ![](https://static001.geekbang.org/resource/image/40/1e/4094a733986073fedb6b9d03f877d71e.jpg) 
+    ![](https://static001.geekbang.org/resource/image/50/b4/50f89510ad1f7570791dd12f4e9adeb4.jpg)
+  + 二叉树
+    + 满二叉树
+      + 叶子节点全部在最底层
+      + 除了叶子节点之外，每个节点都有左右两个子节点
+      + 也是完全二叉树的一种特殊情况
+    + 完全二叉树
+      + 叶子节点都在最底下两层 
+      + 最后一层的叶子节点都靠左排列
+      + 除了最后一层，其它层的节点个数都要达到最大
+    + 二叉树的存储
+      + 基于指针或引用的二叉链式存储法
+      + 每个节点有三个字段
+        + 存储数据
+        + 存储左右子节点的指针
+        ![](https://static001.geekbang.org/resource/image/12/8e/12cd11b2432ed7c4dfc9a2053cb70b8e.jpg) 
+      + 基于数组的顺序存储法
+        + 根节点 i=1
+        + 左子节点 2*i
+        + 右子节点 2*i+1 
+        + 完全二叉树的存储
+            ![](https://static001.geekbang.org/resource/image/14/30/14eaa820cb89a17a7303e8847a412330.jpg) 
+        + 非完全二叉树的存储
+            ![](https://static001.geekbang.org/resource/image/08/23/08bd43991561ceeb76679fbb77071223.jpg)   
+        + 结论
+          + 完全二叉树 用数组存储是最节省内存的一种方式 
+          + 不需要像链式存储法那样额外存储左右子节点的指针
+          + 也是完全二叉树要求最后一层的子节点都靠左的原因
+        + 应用
+          + 堆  
+        + 思考
+          + 给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？
+            + n! 阶乘 即 卡塔兰数
+    + 二叉树的遍历
+      + 时间复杂度 O(n) 因为每个节点最多被访问两次，跟节点的个数 n 成正比 
+      + 以下根代表 任意节点 
+      + 前序(Pre-order):根-左-右
+      + 中序(In-order):左-根-右
+        + 一种升序排列 
+      + 后序(Post-order):左-右-根
+      + 均是一种递归的过程
+      + 前序遍历的递推公式：
+        + preOrder(r) = print r->preOrder(r->left)->preOrder(r->right)
+      + 中序遍历的递推公式：
+        + inOrder(r) = inOrder(r->left)->print r->inOrder(r->right)
+      + 后序遍历的递推公式：
+        + postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
+
+      ![](https://static001.geekbang.org/resource/image/ab/16/ab103822e75b5b15c615b68560cb2416.jpg) 
+      + 层序遍历
+        + 可以看作以根节点为起点，图的广度优先遍历的问题
+    + 二叉搜索树 Binary Search Tree
+      + 也叫二叉搜索排序树、有序二叉树(Ordered Binary Tree)、排序二叉树(Sorted Binary Tree)
+      + 是指一颗空树 或 具有下列性质的二叉树
+        + 左子树上 所有结点 的值均小于它的根节点的值
+        + 右子树上 所有结点 的值均大于它的根节点的值
+        + 以此类推：左、右子树也分别为二叉查找树(即重复性)
+      + 常见操作
+        + 查询
+        + 插入新结点（创建）
+        + 删除 
+        + [操作图示](https://visualgo.net/zh/bst)
+
+### 课后思考
++ 树的面试题解法一般都是递归，为什么？
+  + 树一般都是左右子树遍历查找 重复性质 可以递归调用
 
 ### 源码分析
 + Java Hash Map  
