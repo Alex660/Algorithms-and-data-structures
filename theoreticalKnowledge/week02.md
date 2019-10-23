@@ -1,6 +1,7 @@
 # 摘要
 + 哈希表、映射、集合
 + 树、二叉树、二叉搜索树、图(Graph)
++ 递归
 + 课后思考
 + 源码分析
 
@@ -104,6 +105,8 @@
       ![](https://static001.geekbang.org/resource/image/ab/16/ab103822e75b5b15c615b68560cb2416.jpg) 
       + 层序遍历
         + 可以看作以根节点为起点，图的广度优先遍历的问题
+    + 二叉树的高度
+      + 根节点的高度 = max(左子树高度，右子树高度) + 1  
     + 二叉搜索树 Binary Search Tree
       + 也叫二叉搜索排序树、有序二叉树(Ordered Binary Tree)、排序二叉树(Sorted Binary Tree)
       + 是指一颗空树 或 具有下列性质的二叉树
@@ -119,6 +122,33 @@
 ### 课后思考
 + 树的面试题解法一般都是递归，为什么？
   + 树一般都是左右子树遍历查找 重复性质 可以递归调用
+
+### 递归
++ 解题关键
+  + 写出递推公式 
+    + 递归模版
+    ```java
+    //  recur 递归
+    public void recur(int level, int param) { 
+      // terminator 终结条件
+      if (level > MAX_LEVEL) { 
+        // process result 流程结果
+        return; 
+      } 
+      // process current logic  当前逻辑过程
+      process(level, param); 
+      // drill down 向下递归
+      recur( level: level + 1, newParam); 
+      // restore current status 恢复现状
+    }
+    ```  
+  + 警惕堆栈溢出
+  + 警惕重复计算
+    + 可以使用备忘录模式 
+    ![](https://static001.geekbang.org/resource/image/e7/bf/e7e778994e90265344f6ac9da39e01bf.jpg)
++ 应用实践
+  + DFS深度优先搜索
+  + 前中后序二叉树遍历
 
 ### 源码分析
 + Java Hash Map  
