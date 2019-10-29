@@ -159,7 +159,12 @@
 + 实践应用
   + Google的 MapReduce 
 + 代码模版
-  + 递归的代码模版加上合并所有子问题操作  
+  + 递归的代码模版加上合并所有子问题操作
+    1. terminator 
+    2. process(split your big problem)
+    3. drill down subproblems
+    4. merge(subsult)
+    5. if need reverse states
 
 ### 回溯
 + 用来解决广义的搜索问题
