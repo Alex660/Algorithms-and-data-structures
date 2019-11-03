@@ -2,6 +2,7 @@
 + 深度优先搜索 与 广度优先搜索（depth first search,breadth first search）
 + 贪心算法
 + 二分查找
++ 课后思考
 
 ### DFS 和 BFS
 + 均基于数据机构-图
@@ -267,3 +268,123 @@
     + 直接顺序遍历来得快
   + 数量太大也不实用
     + 因为底层依赖数组，假设有1GB大小的数据，则需要申请1GB的连续存储空间，不现实
++ 常考变形问题
++ 数组中重复元素，且是给定值 
+  + 查找第一个值等于给定值的元素
+    ```java
+    public int bsearch(int[] a, int n, int value) {
+      int low = 0;
+      int high = n - 1;
+      while (low <= high) {
+        int mid = low + ((high - low) >> 1);
+        if (a[mid] >= value) {
+          high = mid - 1;
+        } else {
+          low = mid + 1;
+        }
+      }
+
+      if (low < n && a[low]==value) return low;
+      else return -1;
+    }
+    ```  
+  + 查找最后一个值等于给定值的元素
+    ```java
+    public int bsearch(int[] a, int n, int value) {
+      int low = 0;
+      int high = n - 1;
+      while (low <= high) {
+        int mid =  low + ((high - low) >> 1);
+        if (a[mid] > value) {
+          high = mid - 1;
+        } else if (a[mid] < value) {
+          low = mid + 1;
+        } else {
+          if ((mid == n - 1) || (a[mid + 1] != value)) return mid;
+          else low = mid + 1;
+        }
+      }
+      return -1;
+    }
+    ``` 
+  + 查找第一个大于等于给定值的元素
+    ```java
+    public int bsearch(int[] a, int n, int value) {
+      int low = 0;
+      int high = n - 1;
+      while (low <= high) {
+        int mid =  low + ((high - low) >> 1);
+        if (a[mid] >= value) {
+          if ((mid == 0) || (a[mid - 1] < value)) return mid;
+          else high = mid - 1;
+        } else {
+          low = mid + 1;
+        }
+      }
+      return -1;
+    }
+    ``` 
+  + 查找最后一个小于等于给定值的元素
+    + 如何快速定位出一个IP地址的归属地？
+    ```java
+    public int bsearch7(int[] a, int n, int value) {
+      int low = 0;
+      int high = n - 1;
+      while (low <= high) {
+        int mid =  low + ((high - low) >> 1);
+        if (a[mid] > value) {
+          high = mid - 1;
+        } else {
+          if ((mid == n - 1) || (a[mid + 1] > value)) return mid;
+          else low = mid + 1;
+        }
+      }
+      return -1;
+    }
+    ``` 
+
+
+### 课后思考
++ 如果一个有序数组是一个循环有序数组，比如4，5，6，1，2，3；如何实现一个求"值等于给定值"的二分算法呢？
+  + 此题解答可参考[我的题解](https://github.com/Alex660/leetcode/blob/master/leetCode-33-search-in-rotated-sorted-array.md)
+  + 解法思路
+    + 一、
+      1. 找到分界下标，分成两个有序数组
+      2. 判断目标值在哪个有序数据范围内，做二分查找
+    + 二、
+      1. 找到最大值的下标 x;
+      2. 所有元素下标 +x 偏移，超过数组范围值的取模;
+      3. 利用偏移后的下标做二分查找；
+      4. 如果找到目标下标，再作 -x 偏移，就是目标值实际下标。两种情况最高时耗都在查找分界点上，所以时间复杂度是 O(N）。复杂度有点高，能否优化呢？
+
+    + 三、
+      1. 我们发现循环数组存在一个性质：以数组中间点为分区，会将数组分成一个有序数组和一个循环有序数组。
+      2. 如果首元素小于 mid，说明前半部分是有序的，后半部分是循环有序数组；
+      3. 如果首元素大于 mid，说明后半部分是有序的，前半部分是循环有序的数组；
+      4. 如果目标元素在有序数组范围中，使用二分查找；
+      5. 如果目标元素在循环有序数组中，设定数组边界后，使用以上方法继续查找。时间复杂度为 O(logN)。
++ 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方？
+  + 分析
+    + 设置low,high左右边界，算出中间数nums[mid]
+    + 当nums[mid] > nums[high]时，说明出现了无序的地方在右边
+      + low = mid+1 
+    + 否则无序点在左侧
+      + high = mid  
+    + 两边夹逼直到low == high ，剩下的一个元素即为无序点 
+  + 代码实现
+    ```javascript
+    // 查找无序地方即半有序数组的最小元素的索引
+    function findMinElementI(nums){
+      var low = 0;
+      var high = nums.length -1;
+      while(low<high){
+        var mid = low + ((high - low)>>1);
+        if(nums[mid] > nums[high]){
+          low = mid +1;
+        }else{
+          high = mid;
+        }
+      }
+      return low;
+    } 
+    ```  
