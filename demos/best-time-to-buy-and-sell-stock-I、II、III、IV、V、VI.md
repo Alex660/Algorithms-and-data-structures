@@ -1,6 +1,6 @@
 ## ***The stock issue With Javascript***
 
-### 动态规划：一举歼灭6道股票问题
+### 动态规划：***一法破万法*** 之 歼灭6道股票问题
 #### 1、[121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 #### 2、[122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 #### 3、[123. 买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/submissions/)
