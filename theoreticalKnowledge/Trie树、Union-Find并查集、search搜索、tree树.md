@@ -403,28 +403,28 @@
         # other processing work 
         ...
     ``` 
-    + 双端模版
-      + Set 替换 Queue
-      ```javascript
-      let double_bfs = (start,end) => {
-          let startSet = new Set();
-          let endSet = new Set();
-          startSet.add(start);
-          endSet.add(end);
-          while(startSet.size > 0){
-            let next_startSet = new Set();
-            for(let key of startSet){
-                // process(node)
-                let new_key = process(key);
-                if(endSet.has(new_key)){
-                    return something;
-                }
-                next_startSet.add(new_key);
-            }
-            startSet = next_startSet;
-            if(startSet.size > endSet.size){
-                [beginSet,endSet] = [endSet,beginSet]
-            }
+  + 双端模版
+    + Set 替换 Queue
+    ```javascript
+    let double_bfs = (start,end) => {
+        let startSet = new Set();
+        let endSet = new Set();
+        startSet.add(start);
+        endSet.add(end);
+        while(startSet.size > 0){
+          let next_startSet = new Set();
+          for(let key of startSet){
+              // process(node)
+              let new_key = process(key);
+              if(endSet.has(new_key)){
+                  return something;
+              }
+              next_startSet.add(new_key);
           }
-      }
-      ``` 
+          startSet = next_startSet;
+          if(startSet.size > endSet.size){
+              [beginSet,endSet] = [endSet,beginSet]
+          }
+        }
+    }
+    ``` 
