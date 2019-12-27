@@ -25,6 +25,7 @@
   + [AlgorithmTemplate算法模板](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/theoreticalKnowledge/AlgorithmTemplate%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF.md)
 + leetCode习题分类练习
   + [ProblemClassificationCut习题分类斩](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/theoreticalKnowledge/ProblemClassificationCut%E4%B9%A0%E9%A2%98%E5%88%86%E7%B1%BB%E6%96%A9.md)
+  + [题解](https://github.com/Alex660/leetcode)
   
 ### algo 【～～长期更新中～～】
 + 数据结构和算法必知必会的代码实现
