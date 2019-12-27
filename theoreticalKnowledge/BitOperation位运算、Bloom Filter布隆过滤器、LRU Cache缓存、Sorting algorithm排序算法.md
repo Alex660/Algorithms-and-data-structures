@@ -348,7 +348,34 @@
           return arr;
       }
       ``` 
-
+  + 希尔排序 - (Shell Sort)
+    + 简单插入排序的进阶版，又叫缩小增量排序
+    + 区别
+      + 与插入排序不同的是，会优先比较距离较远的元素
+    + **将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序**
+      + **选择一个增量序列t1，t2，…，tk，其中ti>tj，tk=1**
+      + **按增量序列个数k，对序列进行k 趟排序**
+      + **每趟排序，根据对应的增量ti，将待排序列分割成若干长度为m 的子序列，分别对各子表进行直接插入排序。**
+        + **仅增量因子为1 时，整个序列作为一个表来处理，表长度即为整个序列的长度**
+    + ![](https://images2018.cnblogs.com/blog/849589/201803/849589-20180331170017421-364506073.gif)
+    + code
+      ```javascript
+      let shellSort = (arr) => {
+        let len = arr.length;
+        for(let gap = (len >> 1);gap > 0;gap >>= 1){
+          for(let i = gap;i < len;i++){
+            let j = i;
+            let curr = arr[i];
+            while(j - gap >= 0 && curr < arr[j - gap]){
+              arr[j] = arr[j - gap];
+              j = j - gap;
+            }
+            arr[j] = curr;
+          }
+        }
+        return arr;
+      }
+      ``` 
   + 冒泡排序 - (Bubble Sort)  
     + **嵌套排序，每次查看相邻的元素如果逆序，则交换**
     + ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015223238449-2146169197.gif)
