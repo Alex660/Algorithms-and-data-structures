@@ -415,4 +415,85 @@
     };
     ``` 
   + 求链表的中间结点
-    + 待更
+    + 求第二个中间节点，如[1,2,3,4]，返回3
+      + 解法一：双指针
+      ```javascript
+      var middleNode = function(head) {
+          let fast = head;
+          let slow = head;
+          while(fast && fast.next){
+              fast = fast.next.next;
+              slow = slow.next;
+          }
+          return slow;
+      };
+      ```
+      + 解法二：两次遍历
+        + 参看删掉链表倒数第n个节点 - 解法二
+      ```javascript
+      /**
+       * Definition for singly-linked list.
+      * function ListNode(val) {
+      *     this.val = val;
+      *     this.next = null;
+      * }
+      */
+      /**
+       * @param {ListNode} head
+      * @return {ListNode}
+      */
+      var middleNode = function(head) {
+          let len = 0;
+          let tmpHead = head;
+          while(tmpHead){
+              len++;
+              tmpHead = tmpHead.next;
+          }
+          let center = (len >> 1);
+          let pos = 0;
+          tmpHead = head;
+          while(center--){
+              tmpHead = tmpHead.next;
+          }
+          return tmpHead;
+      };
+      ```
+      + 解法三：数组
+        + 解法二的简化版
+        + 找到了中间节点的位置，那么可以想到利用数组下标取值实现
+      ```javascript
+      /**
+       * Definition for singly-linked list.
+      * function ListNode(val) {
+      *     this.val = val;
+      *     this.next = null;
+      * }
+      */
+      /**
+       * @param {ListNode} head
+      * @return {ListNode}
+      */
+      var middleNode = function(head) {
+          let len = 0;
+          let tmpHead = head;
+          let res = [];
+          while(tmpHead){
+              res[len++] = tmpHead;
+              tmpHead = tmpHead.next;
+          }
+          return res[len >> 1];
+      };
+      ```
+    + 求第一个中间节点，如[1,2,3,4]，返回2
+      + 解法一：双指针
+      ```javascript
+      var middleNode = function(head) {
+          let fast = head;
+          let slow = head;
+          while(fast.next && fast.next.next){
+              fast = fast.next.next;
+              slow = slow.next;
+          }
+          return slow;
+      };
+      ```
