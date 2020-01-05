@@ -1,5 +1,16 @@
 ### 定义
 + 略
+### 链表操作摘要
++ 单链表插入、删除、查找
++ 单链表反转
++ 单链表反转从位置 m 到 n 的部分
++ 链表中环的检测
++ 两个有序的链表合并
++ 删除链表倒数第n个节点
++ 求链表的中间结点
++ 求链表环的入口节点
++ 两两交换链表中的节点
++ K 个一组翻转链表
 ### 对比
 + ![](https://static001.geekbang.org/resource/image/d5/cd/d5d5bee4be28326ba3c28373808a62cd.jpg)
 ### 单链表
@@ -227,6 +238,180 @@ var reverseList = function(head) {
     return tHead.next;
 };
 ```    
+#### 单链表反转从位置 m 到 n 的部分
++ 解法一：迭代
+  + 思路同单链表反转 - 解法一
+    + 即将需要反转的 m到n 区间的链表反转，再重新连接首尾即可
+```javascript
+var reverseBetween = function(head, m, n) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let tmpHead = dummy;
+    // 找到第m-1个链表节点
+    for(let i = 0;i < m - 1;i++){
+        tmpHead = tmpHead.next;
+    }
+    // 206题解法一
+    let prev = null;
+    let curr = tmpHead.next;
+    for(let i = 0;i <= n - m;i++){
+        let next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+    // 将翻转的部分链表 和 原链表拼接
+    tmpHead.next.next = curr;
+    tmpHead.next = prev;
+    return dummy.next;
+};
+```
++ 解法二：迭代II
+  + 解法一的 for -> while 版本
+```javascript
+var reverseBetween = function(head, m, n) {
+    if(head == null) return null;
+    let curr = head,prev = null;
+    while(m > 1){
+        prev = curr;
+        curr = curr.next;
+        m--;
+        n--;
+    }
+    let con = prev,tail = curr;
+    while(n > 0){
+        let next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+        n--;
+    }
+    if(con != null){
+        con.next = prev;
+    }else{
+        head = prev;
+    }
+    tail.next = curr;
+    return head;
+};
+```
++ 解法三：迭代III
+  + 思路
+    + 关键是插入操作，每次将当前尾节点插入到全链表中第一个节点和第二个节点之间
+    + 每次只手动更新tail节点，一次插入完成会自动更新第二个节点
+    + 因此需要 pre、start、tail三个节点
+  + 举个栗子
+    + 1->2->3->4->null，m = 2，n = 4
+      + 将节点 3 插入到 节点1和节点2 之间
+        + 1->3->2->4->null
+      + 将节点 4 插入到 节点1和节点3 之间
+        + 1->4->3->2->null
+  + 图解
+    + ![截屏2019-12-22上午8.36.43.png](https://pic.leetcode-cn.com/b4c536ca241616fed0f74869244f90f4165c79ed150284f3d8a1431e648924ae-%E6%88%AA%E5%B1%8F2019-12-22%E4%B8%8A%E5%8D%888.36.43.png)
+```javascript
+var reverseBetween = function(head, m, n) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let tmpHead = dummy;
+    for(let i = 0;i < m - 1;i++){
+        tmpHead = tmpHead.next;
+    }
+    let start = tmpHead.next;
+    let tail = start.next;
+    for(let i = 0;i < n - m;i++){
+        start.next = tail.next;
+        tail.next = tmpHead.next;
+        tmpHead.next = tail;
+        tail = start.next;
+    }
+    return dummy.next;
+};
+```
++ 解法四：递归
+  + 参考题解
+    + [步步拆解：如何递归地反转链表的一部分](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/)
+  + 题解原型
+    + 思路同单链表反转 - 解法三
+    + 解法三
+      + 当n为链表长度时
+        + 相当于反转链表 从1到n 个节点
+          ```javascript
+          var reverseList = function(head) {
+              // 如果测试用例只有一个节点 或者 递归到了尾节点，返回当前节点 
+              if(!head || !head.next) return head;
+              // 存储当前节点的下一个节点
+              let next = head.next;
+              let reverseHead = reverseList(next);
+              // 断开 head
+              head.next = null;
+              // 反转，后一个节点连接当前节点
+              next.next = head;
+              return reverseHead;
+          };
+          ``` 
+        + 或者这样写
+          + 此时 tail 恒为 null
+          ```javascript
+          var reverseList = function(head,n) {
+              if(!head || !head.next) return head;
+              let tail = null;
+              if(n == 1){
+                  tail = head.next;
+                  return head;
+              }
+              let next = head.next;
+              let reverseHead = reverseList(next,n-1);
+              head.next = tail;
+              next.next = head;
+              return reverseHead;
+          };
+          ``` 
+      + 当 n 小于链表长度时
+        + 此时 tail 为 第 n+1 个节点
+          ```javascript
+          var reverseList = function(head,n) {
+              if(!head || !head.next) return head;
+              let tail = null;
+              if(n == 1){
+                  tail = head.next;
+                  return head;
+              }
+              let next = head.next;
+              let reverseHead = reverseList(next,n-1);
+              head.next = tail;
+              next.next = head;
+              return reverseHead;
+          };
+          ``` 
+      + 上面两种情况均是默认从第1个节点开始反转，即题意中的 m == 1 时
+      + tail 相当于 反转前的头节点反转后不一定是最后一个节点，因为此时n != 链表长度
+        + 所以要记录最后一处反转的位置，用以连接被反转的部分
+        + 如果是整条链表都反转，head就成了最后一个节点，它的next自然恒为null
+      + 图解
+        + ![截屏2019-12-22上午11.42.54.png](https://pic.leetcode-cn.com/e6edd91b91d02d42e82084aff83e039f4d7af458c39d767e84457f8bc4953e60-%E6%88%AA%E5%B1%8F2019-12-22%E4%B8%8A%E5%8D%8811.42.54.png)
+  + 思路
+    + 既然默认m=1，n未知的解法出来了
+    + 那么如题，m 未知的话，每次减1递归就好了
+```javascript
+var reverseBetween = function(head, m, n) {
+    let nextTail = null;
+    let reverseN = (head,n) => {
+        if(n == 1){
+            nextTail = head.next;
+            return head; 
+        }
+        let last = reverseN(head.next,n-1);
+        head.next.next = head;
+        head.next = nextTail;
+        return last;
+    }
+    if(m == 1){
+        return reverseN(head,n);
+    }
+    head.next = reverseBetween(head.next,m-1,n-1);
+    return head;
+};
+```
 #### 链表中环的检测
 + 解法一：数组判重
 + 环中两个节点相遇，说明在不同的时空内会存在相遇的那一刻，过去与未来相遇，自己和前世回眸，即是重复
@@ -663,5 +848,161 @@ var detectCycle = function(head) {
         }
     }
     return null;
+};
+```
+#### 两两交换链表中的节点
++ 解法一：非递归
+  + 时间复杂度：O(n)
+  + 空间复杂度：O(1)
+  + 思路
+    + 添加一个哨兵节点
+    + 三个节点外加一个哨兵节点之间作指针指向变换操作
+  + 图解
+    + ![截屏2019-12-19上午7.16.40.png](https://pic.leetcode-cn.com/84031b11de4ccd16d020a2f4a727db2df1d86e94b91e60948a2c18f24c19cdcb-%E6%88%AA%E5%B1%8F2019-12-19%E4%B8%8A%E5%8D%887.16.40.png)
+```javascript
+var swapPairs = function(head) {
+    let thead = new ListNode(0);
+    thead.next = head;
+    let tmp = thead;
+    while(tmp.next != null && tmp.next.next != null){
+        let start = tmp.next;
+        let end = start.next;
+        tmp.next = end;
+        start.next = end.next;
+        end.next = start;
+        tmp = start;
+    }
+    return thead.next;
+};
+```
++ 解法二：递归
+  + 时间复杂度：O(n)
+  + 空间复杂度：O(n)
+  + 思路
+    + 终止
+      + 同解法一：至少三个节点之间才可以互换
+      + 只有一个节点或没有节点，返回此节点
+    + 交换
+      + 设需要交换的两个节点为head、next
+      + head -> next -> c -> ...
+      + head -> c -> ... && next -> head
+      + next -> head -> c -> ...
+        + head 连接( -> )后面交换完成的子链表
+        + next 连接( -> )head 完成交换
+      + 对子链表重复上述过程即可
+```javascript
+var swapPairs = function(head) {
+    if(head == null || head.next == null){
+        return head;
+    }
+    // 获得第 2 个节点
+    let next = head.next;
+    // next.next = head.next.next
+    // 第1个节点指向第 3 个节点，并从第3个节点开始递归
+    head.next = swapPairs(next.next);
+    // 第2个节点指向第 1 个节点
+    next.next = head;
+    // 或者 [head.next,next.next] = [swapPairs(next.next),head]
+    return next;
+};
+```
+#### K 个一组翻转链表
++ 解法一：迭代
+  + 思路同单链表反转 - 解法一
+  + 区别
+    + 限制k个
+      + 用计数实现，实时更新链表需要反转部分的头、尾节点
+```javascript
+var reverseKGroup = function(head, k) {
+    let cur = head;
+    let count = 0;
+    // 求k个待反转元素的首节点和尾节点
+    while(cur != null && count != k){
+        cur = cur.next;
+        count++;
+    }
+    // 足够k个节点，去反转
+    if(count == k){
+        // 递归链接后续k个反转的链表头节点
+        cur = reverseKGroup(cur,k);
+        while(count != 0){
+            count--;
+            // 反转链表
+            let tmp = head.next;
+            head.next = cur;
+            cur = head;
+            head = tmp;
+        }
+        head = cur;
+    }
+    return head;
+};
+```
++ 解法二：递归 II
+  + 同解法一
+  + 区别
+    + while改成for
+```javascript
+var reverseKGroup = function(head, k) {
+    if(!head) return null;
+    // 反转链表
+    let reverse = (a,b) => {
+        let pre;
+        let cur = a;
+        let next = b;
+        while(cur != b){
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+    // 反转区间a-b的k个待反转的元素
+    let a = head;
+    let b = head;
+    for(let i = 0;i < k;i++){
+        // 不足k个，不需要反转
+        if(!b) return head;
+        b = b.next;
+    }
+    // 反转前k个元素
+    let newHead = reverse(a,b);
+    // 递归链接后续反转链表
+    a.next = reverseKGroup(b,k);
+    return newHead;
+};
+```
++ 解法三：栈解
+  + 思路同单链表反转 - 解法四
+    + 反转k个
+```javascript
+var reverseKGroup = function(head, k) {
+    let stack = [];
+    let preHead = new ListNode(0);
+    let pre = preHead;
+    // 循环链接后续反转链表
+    while(true){
+        let count = 0;
+        let tmp = head;
+        while(tmp && count < k){
+            stack.push(tmp);
+            tmp = tmp.next;
+            count++;
+        }
+        // 不够k个，直接链接剩下链表返回
+        if(count != k){
+            pre.next = head;
+            break;
+        }
+        // 出栈即是反转
+        while(stack.length > 0){
+            pre.next = stack.pop();
+            pre = pre.next;
+        }
+        pre.next = tmp;
+        head = tmp;
+    }
+    return preHead.next;
 };
 ```
