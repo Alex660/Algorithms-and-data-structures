@@ -1,0 +1,47 @@
+### 定义
++ 略
+### 创建
++ let arr = new Array()
++ let arr = []
+### 方法
++ [Array.from()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
+  + 从类数组对象或者可迭代对象中创建一个新的数组实例
++ [Array.isArray()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)
+  + 用来判断某个变量是否是一个数组对象。
++ [Array.of()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/of)
+  + 根据一组参数来创建新的数组实例，支持任意的参数数量和类型
++ [Array.prototype.copyWithin()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)
+  + 在数组内部，将一段元素序列拷贝到另一段元素序列上，覆盖原有的值
++ [Array.prototype.fill()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)
+  + 将数组中指定区间的所有元素的值，都替换成某个固定的值
++ [Array.prototype.pop()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
+  + 删除数组的最后一个元素，并返回这个元素
++ [Array.prototype.push()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push)
+  + 在数组的末尾增加一个或多个元素，并返回数组的新长度
++ [Array.prototype.reverse()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)
+  + 颠倒数组中元素的排列顺序
++ shift()
++ sort()
++ splice()
++ unshift()
++ concat()
++ includes()
++ join()
++ slice()
++ toString()
++ toLocaleString()
++ indexOf()
++ lastIndexOf()
++ forEach()
++ entries()
++ every()
++ some()
++ filter()
++ find()
++ findIndex()
++ keys()
++ map()
++ reduce()
++ reduceRight()
++ values()
++ [更多解释敬请参考MDN官方文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
