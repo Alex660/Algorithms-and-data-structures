@@ -140,6 +140,55 @@
         else: 
                 right = mid - 1
     ```
+#### 二分查找变体
++ [参考文章 - 二分查找算法细节详解](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/solution/er-fen-cha-zhao-suan-fa-xi-jie-xiang-jie-by-labula/)
++ 寻找数组中一个数的最左边出现的位置和最右边出现的位置
+  + **寻找左侧边界的二分查找**
+    + 模板
+    ```javascript
+      let leftBound = (array,target) => {
+          let left = 0;
+          let right = array.length;
+          while(left < right){
+              let mid = (left + right) >> 1;
+              // 缩小「搜索区间」的上界 right，在区间 [left, mid) 中继续搜索
+              // 即不断向左收缩，达到锁定左侧边界的目的。
+              if(array[mid] == target){
+                  right = mid;
+              }else if(array[mid] < target){
+                  left = mid + 1;
+              }else if(array[mid] > target){
+                  right = mid;
+              }
+          }
+          return left;
+      }
+    ``` 
+  + **寻找右侧边界的二分查找**
+    + 模板
+    ```javascript
+      let rightBound = (array,target) => {
+          let left = 0;
+          let right = array.length;
+          while(left < right){
+              let mid = (left + right) >> 1;
+              // 增大「搜索区间」的下界 left，使得区间不断向右收缩，
+              // 达到锁定右侧边界的目的。
+              if(array[mid] == target){
+                  // mid = left - 1
+                  left = mid + 1; 
+              }else if(array[mid] < target){
+                  left = mid + 1;
+              }else if(array[mid] > target){
+                  right = mid;
+              }
+          }
+          // 对 left 的更新必须是 left = mid + 1
+          // while 循环结束时，nums[left] 一定不等于 target ，
+          // 而 nums[left-1] 可能是 target。
+          return left - 1;
+      }
+    ``` 
 
 #### Trie树
 + Python
