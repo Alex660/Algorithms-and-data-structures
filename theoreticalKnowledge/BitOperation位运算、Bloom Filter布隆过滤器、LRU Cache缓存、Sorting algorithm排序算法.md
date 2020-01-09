@@ -401,11 +401,30 @@
     + **将小元素放 pivot 左边，大元素放右侧**
     + **然后依次对右边和右边对子数组继续快排**
     + ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015230936371-1413523412.gif)
-    + code
-      + 借助额外空间
-        + ![](https://static001.geekbang.org/resource/image/66/dc/6643bc3cef766f5b3e4526c332c60adc.jpg)
-      + 原地替换
-        + ![](https://static001.geekbang.org/resource/image/08/e7/086002d67995e4769473b3f50dd96de7.jpg)
+    + 借助额外空间
+      + ![](https://static001.geekbang.org/resource/image/66/dc/6643bc3cef766f5b3e4526c332c60adc.jpg)
+      + 此种思路和快排思想很吻合，缺点是空间复杂度高
+      + code
+      ```javascript
+      let quickSort = (arr) => {
+        if(arr.length <= 1) return arr;
+        let pivot = arr[arr.length-1];
+        let left = [];
+        let right = [];
+        for(let i = 0;i < arr.length;i++){
+            if(arr[i] < pivot){
+                left.push(arr[i]);
+            }else if(arr[i] > pivot){
+                right.push(arr[i]);
+            }
+        }
+        return quickSort(left).concat([pivot],quickSort(right));
+      }
+      ``` 
+    + 原地替换
+      + ![](https://static001.geekbang.org/resource/image/08/e7/086002d67995e4769473b3f50dd96de7.jpg)
+      + 此种思路，利用交换方法避免每次都创建左右两个数组，不是很好理解，多看图
+      + code
       ```javascript
       // 分区函数 + 原地替换
       let partition = (arr,start,end) => {
