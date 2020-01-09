@@ -577,7 +577,46 @@
       ``` 
   + 桶排序(Bucket Sort)
     + 假设输入数据服从均匀分布，将数据分到有限数量的桶里，
-    + 每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排)
+    + 每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排序)
+    + **设置默认数组当作空桶**
+    + **设置映射函数，将遍历的数组元素均匀的分配到映射的桶内**
+    + **对每个非空桶进行排序(可以选择其它排序方法)**
+    + **将所有有序桶中的元素拼接返回即为所求**
+    + 图解
+      + ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015232107090-1920702011.png)
+    + code
+      ```javascript
+      let bucketSort = (arr,bucketSize = 5) => {
+        // 桶的数量默认为5
+        if(arr.length === 0) return arr;
+        let res = [];
+        let minVal = arr[0];
+        let maxVal = arr[0];
+        for(let i = 0;i < arr.length;i++){
+            if(arr[i] < minVal){
+                minVal = arr[i];
+            }else if(arr[i] > maxVal){
+                maxVal = arr[i];
+            }
+        }
+        // 初始化n个桶
+        let bucketCount = Math.floor((maxVal - minVal)/bucketSize) + 1;
+        let buckets = new Array(bucketCount);
+        for(let i = 0;i < buckets.length;i++){
+            buckets[i] = [];
+        }
+        // 映射函数，均匀的将遍历的元素分配到n个中对应的桶内
+        for(let j = 0;j < arr.length;j++){
+            buckets[Math.floor((arr[j]-minVal)/bucketSize)].push(arr[j]);
+        }
+        for(let r = 0;r < buckets.length;r++){
+          // 对每个桶进行排序，这里选择插入排序
+            insertionSort(buckets[r]);
+            res = res.concat(buckets[r]);
+        }
+        return res;
+      }
+      ``` 
   + 基数排序(Radix Sort)
     + 按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。
     + 有时候有些属性是有优先级顺序的，先按低优先级排序，再按高优先级排序。
