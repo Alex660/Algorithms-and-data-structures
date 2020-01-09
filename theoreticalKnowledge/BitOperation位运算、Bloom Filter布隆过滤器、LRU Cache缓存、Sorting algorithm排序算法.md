@@ -421,6 +421,16 @@
         return quickSort(left).concat([pivot],quickSort(right));
       }
       ``` 
+      + 或者这样写
+      ```javascript
+      let quickSort = (arr) => {
+        if(arr.length <= 1) return arr;
+        const pivot = arr.pop();
+        let left = arr.filter(item => item < pivot);
+        let right = arr.filter(item => item >= pivot);
+        return quickSort(left).concat([pivot], quickSort(right));
+      }
+      ``` 
     + 原地替换
       + ![](https://static001.geekbang.org/resource/image/08/e7/086002d67995e4769473b3f50dd96de7.jpg)
       + 此种思路，利用交换方法避免每次都创建左右两个数组，不是很好理解，多看图
