@@ -466,60 +466,106 @@
     + **对这两个子序列分别采用归并排序**
     + **将两个排序好的子序列合并成一个最终的排序序列**
     + ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015230557043-37375010.gif)
-    + code
-      ```javascript
-      let mergeArr = (left,right) => {
-          let result = [];
-          let left_i = 0,right_j = 0;
-          while(left_i < left.length && right_j < right.length){
-            if(left[left_i] <= right[right_j]){
-                result.push(left[left_i]);
-                left_i++;
-            }else{
-                result.push(right[right_j]);
-                right_j++
+    + 递归版
+      + ![](https://pic.leetcode-cn.com/8c47e58b6247676f3ef14e617a4686bc258cc573e36fcf67c1b0712fa7ed1699-Picture2.png)
+      + code
+        ```javascript
+        let mergeArr = (left,right) => {
+            let result = [];
+            let left_i = 0,right_j = 0;
+            while(left_i < left.length && right_j < right.length){
+              if(left[left_i] <= right[right_j]){
+                  result.push(left[left_i]);
+                  left_i++;
+              }else{
+                  result.push(right[right_j]);
+                  right_j++
+              }
+            }
+            return [...result,...left.slice(left_i),...right.slice(right_j)];
+        }
+        let mergeSort = (arr) => {
+            if(arr.length <= 1){
+                return arr;
+            }
+            let mid = arr.length >> 1;
+            let left = arr.slice(0,mid);
+            let right = arr.slice(mid);
+            return mergeArr(mergeSort(left),mergeSort(right));
+        }
+        ``` 
+        + 或者
+        ```javascript
+        let mergeArr = (arr,left,mid,right) => {
+            let temp = [];
+            let i = left,j = mid + 1,sortedIndex = 0;
+            while(i <= mid && j <= right){
+                temp[sortedIndex++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+            }
+            while(i <= mid){
+                temp[sortedIndex++] = arr[i++];
+            }
+            while(j <= right){
+                temp[sortedIndex++] = arr[j++];
+            }
+            for(let r = 0;r < temp.length;r++){
+                arr[left + r] = temp[r];
+            }
+        }
+        let mergeSort = (arr,left,right) => {
+            if(left >= right){
+                return;
+            }
+            let mid = (left + right) >> 1;
+            mergeSort(arr,left,mid);
+            mergeSort(arr,mid+1,right);
+            mergeArr(arr,left,mid,right);
+        }
+        ``` 
+      + 非递归版
+        + 思路
+          + 对于给定数组，每次归并2*i个元素
+            + 初始化每次归并1 个元素，即i = 1
+            + ![](https://pic.leetcode-cn.com/c1d5347aa56648afdec22372ee0ed13cf4c25347bd2bb9727b09327ce04360c2-Picture1.png)
+        + code
+          + javascript
+          ```javascript
+          let mergeArr = (left,mid,right) => {
+            let tmp = [];
+            let i = left;
+            let j = mid + 1;
+            let sortedIndex = 0;
+            while(i <= mid && j <= right){
+                if(arr[i] <= arr[j]){
+                    tmp[sortedIndex++] = arr[i++];
+                }else{
+                    tmp[sortedIndex++] = arr[j++];
+                }
+            }
+            while(i <= mid){
+                tmp[sortedIndex++] = arr[i++];
+            }
+            while(j <= right){
+                tmp[sortedIndex++] = arr[j++];
+            }
+            for(let i = 0;i < tmp.length;i++){
+                arr[left + i] = tmp[i];
             }
           }
-          return [...result,...left.slice(left_i),...right.slice(right_j)];
-      }
-      let mergeSort = (arr) => {
-          if(arr.length <= 1){
-              return arr;
+          let mergeSort = (arr) => {
+            let n = arr.length;
+            for(let i = 1;i < n;i *= 2){
+                for(let j = 0;j + i < n;j += i*2){
+                    let left = j;
+                    let mid = i + j - 1;
+                    let right = Math.min(j + 2*i - 1,n - 1);
+                    mergeArr(left,mid,right);
+                }
+            }
           }
-          let mid = arr.length >> 1;
-          let left = arr.slice(0,mid);
-          let right = arr.slice(mid);
-          return mergeArr(mergeSort(left),mergeSort(right));
-      }
-      ``` 
-      + 或者
-      ```javascript
-      let mergeArr = (arr,left,mid,right) => {
-          let temp = [];
-          let i = left,j = mid + 1,sortedIndex = 0;
-          while(i <= mid && j <= right){
-              temp[sortedIndex++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
-          }
-          while(i <= mid){
-              temp[sortedIndex++] = arr[i++];
-          }
-          while(j <= right){
-              temp[sortedIndex++] = arr[j++];
-          }
-          for(let r = 0;r < temp.length;r++){
-              arr[left + r] = temp[r];
-          }
-      }
-      let mergeSort = (arr,left,right) => {
-          if(left >= right){
-              return;
-          }
-          let mid = (left + right) >> 1;
-          mergeSort(arr,left,mid);
-          mergeSort(arr,mid+1,right);
-          mergeArr(arr,left,mid,right);
-      }
-      ``` 
+          ``` 
+        + java
+          + ![](https://img-blog.csdn.net/20170924210009423?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGVsbG90b21oYWhh/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
   + 堆排序 - (Heap Sort)
     + 是一种特殊的树
       + 是一个完全二叉树
