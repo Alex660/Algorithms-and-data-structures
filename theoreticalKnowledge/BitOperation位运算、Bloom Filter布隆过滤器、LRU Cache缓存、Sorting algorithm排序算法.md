@@ -631,25 +631,50 @@
     + 将输入的数据值转化为键存储在额外开辟的数组空间中；
     + 然后依次把计数大于 1 的填充回原数组
     + ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015231740840-6968181.gif)
-    + code
-      ```javascript
-      let countingSort = (arr,maxValue) => {
-          let bucket = new Array(maxValue+1).fill(0);
-          let sortedIndex = 0;
-          let arrLen = arr.length;
-          let bucketLen = maxValue + 1;
-          for(let i = 0;i < arrLen;i++){
-              bucket[arr[i]]++;
-          }
-          for(let j = 0;j < bucketLen;j++){
-              while(bucket[j] > 0){
-                  arr[sortedIndex++] = j;
-                  bucket[j]--;
-              }
-          }
-          return arr;
-      }
-      ``` 
+    + 经典版 - 借助额外空间
+      + code
+        ```javascript
+        let countingSort = (arr,maxValue) => {
+            let bucket = new Array(maxValue+1).fill(0);
+            let sortedIndex = 0;
+            let arrLen = arr.length;
+            let bucketLen = maxValue + 1;
+            for(let i = 0;i < arrLen;i++){
+                bucket[arr[i]]++;
+            }
+            for(let j = 0;j < bucketLen;j++){
+                while(bucket[j] > 0){
+                    arr[sortedIndex++] = j;
+                    bucket[j]--;
+                }
+            }
+            return arr;
+        }
+        ``` 
+    + 原地交换版 - 不借助额外空间
+      + 思路解析
+        + 重复对当前值大于0的元素进行
+          + 当前值 ！= 当前值为索引的元素 
+            + 当前值和当前值为索引的元素进行交换
+        + 模仿经典版进行计数
+      + 对于有重复元素的数组进行频繁交换会和下面这个交换条件冲突
+        + 当前值 ！= 当前值为索引的元素 
+          + 因为你不知道 当前值为索引的元素是原来的值还是被替换过来的
+          + 处理很麻烦，就不如经典版容易理解了
+      + **此解法只适用于原数组中没有重复元素时**
+      + code
+        ```javascript
+        let countingSort = (arr) => {
+            let n = arr.length;
+            let sortedIndex = 0;
+            for(let i = 0;i <= n;i++){
+                while(arr[i] > 0 && arr[arr[i]] != arr[i]){
+                    [arr[arr[i]],arr[i]] = [arr[i],arr[arr[i]]];
+                }
+            }
+            arr.filter((el) => el != undefined);
+        };
+        ``` 
   + 桶排序(Bucket Sort)
     + 假设输入数据服从均匀分布，将数据分到有限数量的桶里，
     + 每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排序)
