@@ -661,6 +661,7 @@
         + 当前值 ！= 当前值为索引的元素 
           + 因为你不知道 当前值为索引的元素是原来的值还是被替换过来的
           + 处理很麻烦，就不如经典版容易理解了
+      + [例题 - 缺失的第一个正数 - 解法四](https://github.com/Alex660/leetcode/blob/master/leetCode-0-041-first-missing-positive.md)
       + **此解法只适用于原数组中没有重复元素时**
       + code
         ```javascript
