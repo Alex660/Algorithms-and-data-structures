@@ -1,4 +1,4 @@
-# 算法与数据结构---知识荟萃  【with javascript】
+# 算法与数据结构---知识荟萃
 ## 摘要
 + demos
 + otherShare
