@@ -1,4 +1,4 @@
-# 算法与数据结构---知识荟萃
+# 算法与数据结构等 - 知识荟萃 「长期更新中」
 ## 摘要
 + demos
 + otherShare
@@ -10,6 +10,10 @@
 
 ### otherShare
 + 知识分享
+  + 服务器知识点总结
+  + 前端面试知识点总结
+  + 数据结构分享
+  + ......
 
 ### theoreticalKnowledge
 + 数据结构大部分知识点讲解
@@ -27,7 +31,7 @@
   + [ProblemClassificationCut习题分类斩](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/theoreticalKnowledge/ProblemClassificationCut%E4%B9%A0%E9%A2%98%E5%88%86%E7%B1%BB%E6%96%A9.md)
   + [题解](https://github.com/Alex660/leetcode)
   
-### algo 【～～长期更新中～～】
+### algo
 + 数据结构和算法必知必会的代码实现
   + 数组
   + 链表
