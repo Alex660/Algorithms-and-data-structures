@@ -395,6 +395,49 @@
           return arr;
       }
       ``` 
+      + 改进版
+        + 1、设置两个个标志位，pos用于标识最后一次交换的位置，flag用于当前数组是否已经有序的标志
+        ```javascript
+        let bubblesort = (arr) => {
+          let i = arr.length - 1;
+          while(i > 0){
+            let flag = true;
+            let pos = 0;
+            for(let j = 0;j < i;j++){
+                if(arr[j] > arr[j+1]){
+                    pos = j;
+                    flag = false;
+                    [arr[j],arr[j+1]] = [arr[j+1],arr[j]];
+                }
+            }
+            if(flag) break;
+            i = pos;
+          }
+          return arr;
+        }
+        ``` 
+        + 2、一次排序同时找出最大值和最小值，查询次数减少一半
+        ```javascript
+        let bubblesort = (arr) => {
+          let high = arr.length - 1;
+          let low = 0;
+          while(low < high){
+            for(let i = 0;i < high;i++){
+              if(arr[i] > arr[i+1]){
+                  [arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+              }
+            }
+            --high;
+            for(let j = high;j > low;j--){
+              if(arr[j] < arr[j-1]){
+                  [arr[j],arr[j-1]] = [arr[j-1],arr[j]];
+              }
+            }
+            ++low;
+          }
+          return arr;
+        }
+        ``` 
 + 高级排序 - O( N*LogN )
   + 快速排序 - (Quick Sort)
     + **数组取标杆 pivot**
