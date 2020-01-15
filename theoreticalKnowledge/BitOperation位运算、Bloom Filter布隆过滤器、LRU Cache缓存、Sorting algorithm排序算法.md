@@ -765,6 +765,40 @@
     + 按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。
     + 有时候有些属性是有优先级顺序的，先按低优先级排序，再按高优先级排序。
     ![](http://mmbiz.qpic.cn/mmbiz_gif/zPh0erYjkib35OACBzSr4hczDxQB1Pvg1mnd6lVKDE3altOGNchsvfYeia2iaU40Ys9d99g48ib8mQA029fI8RjS7Q/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1) 
+    + 思路
+      + 从数组低位开始比较
+        + 每个数以个位为主进行计数排序：
+          + [32,14,41,5,621] => [41,621,32,14,5]
+        + 从十位开始进行计数排序
+          + [41,621,32,14,5] => [5,14,621,32,41]
+        + 从百位开始进行计数排序
+          + [5,14,621,32,41] => [5,14,32,41,621]
+      + 数组中最大数有n位，则需要计数比较各位n次
+    + code
+      ```javascript
+      let radixSort = (arr,maxDigit) => {
+        let digit = 1;
+        let mod = 10;
+        let bucket = new Array(10);
+        for(let i = 0;i < maxDigit;i++){
+          for(let j = 0;j < arr.length;j++){
+            let index = parseInt(arr[j]/digit) % mod;
+            if(bucket[index] == null) bucket[index] = [];
+            bucket[index].push(arr[j]);
+          }
+          let pos = 0;
+          for(let r = 0;r < bucket.length;r++){
+            let val = null;
+            if(bucket[r]){
+              while((val = bucket[r].shift()) != null){
+                  arr[pos++] = val;
+              }  
+            }
+          }
+          digit *= 10;
+        }
+      }
+      ``` 
 
 ### 算法区别
   + 快排与归并
@@ -777,3 +811,8 @@
     + 快排：
       + 先分区，小的放基准左边，大的放基准右边
       + 再排序，将两个以基准划分的子数组合并成完全有序的一个数组
+  + 计数排序、桶排序、基数排序
+    + 这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：
+      + 基数排序：根据键值的每位数字来分配桶；
+      + 计数排序：每个桶只存储单一键值；
+      + 桶排序：每个桶存储一定范围的数值。
