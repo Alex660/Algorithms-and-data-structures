@@ -782,7 +782,9 @@
         let bucket = new Array(10);
         for(let i = 0;i < maxDigit;i++){
           for(let j = 0;j < arr.length;j++){
-            let index = parseInt(arr[j]/digit) % mod;
+            // 这里不能用parseInt
+            // parseInt(1/10000000) == 1，当栗子为[1,10000000]时，有问题
+            let index = Math.floor(arr[j]/digit) % mod;
             if(bucket[index] == null) bucket[index] = [];
             bucket[index].push(arr[j]);
           }
