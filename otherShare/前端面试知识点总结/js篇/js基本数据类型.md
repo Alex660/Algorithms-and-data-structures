@@ -1,0 +1,9 @@
+# js基本数据类型
+#### ES5
++ 简单数据类型
+  + String、Number、Boolean、Null、undefined
++ 复杂数据类型
+  + Object
+#### ES6
++ 新增
+  + [Symbol](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
