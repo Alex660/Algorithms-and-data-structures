@@ -1,6 +1,8 @@
 ## JavaScript中this
 ### 定义
 + **this指的是函数运行时所在的环境**
+### 参考文献
++ [阮一峰 - JavaScript 的 this 原理](http://www.ruanyifeng.com/blog/2018/06/javascript-this.html)
 ### 使用场景
 + 1、作为一般函数执行
   + this指向全局对象
@@ -83,7 +85,7 @@
     var obj1 = {a:2};
     var obj2 = {b:3};
     const user = new User()(); // {name:"John"}
-    User()(); // window
+    User()(); // window 、相当于 window.User()
     User.bind(obj1)()() // {a: 2, name: "John"}
 
     // 全局
