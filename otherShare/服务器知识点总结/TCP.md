@@ -1,0 +1,32 @@
+## TCP.md
+### 参考文献
++ [TCP 协议简介](http://www.ruanyifeng.com/blog/2017/06/tcp-protocol.html)
++ [tcp中11种状态详解](https://segmentfault.com/a/1190000019620421)
++ [TCP协议图文详解](https://www.linuxidc.com/Linux/2018-09/154367.htm)
+#### 图解
++ ![](https://img-blog.csdn.net/20180620002440131?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM2NjI5Njk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
++ ![](https://img-blog.csdn.net/20180620002506635?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM2NjI5Njk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+#### 三次握手
++ 图解
+  + ![](https://segmentfault.com/img/bVbupSr?w=490&h=234)
++ 流程
+  + 服务端打开监听(LISTEN)
+  1. 客户端先发起SYN主动连接标识
+  2. 服务端回复SYN及ACK确认
+  3. 客户端再确认即三次握手TCP连接成功
+#### 四次挥手
++ 图解
+  + ![](https://segmentfault.com/img/bVbuSoR?w=559&h=325)
++ 流程
+  1. 客户端发送连接释放报文
+     1. 并停止发送数据，主动关闭TCP连接
+  2. 服务器收到释放报文后，发出确认报文
+     1. 此时服务端进入关闭等待状态
+     2. TCP连接处于半关闭状态，服务器仍旧可以向客户端发送数据
+     3. 客户端收到服务器的确认请求不做任何操作
+     4. 此时客户端进入终止等待状态
+  3. 服务器确认没有需要再发送的数据后，向客户端发送连接释放报文
+     1. 此时服务器处于最后确认状态，等待客户端的确认收到回复
+  4. 客户端收到释放报文后，发出确认报文ACK
+     1. 此时TCP连接还没有释放，经过2*MSL时间后，进入CLOSED状态
+     2. 服务器收到客户端的确认回复先人一步进入CLOSED，即关闭状态
