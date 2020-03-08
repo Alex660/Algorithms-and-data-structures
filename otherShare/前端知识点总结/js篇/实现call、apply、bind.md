@@ -30,14 +30,22 @@ Function.prototype.apply = function (context) {
 ```javascript
 if(!Function.prototype.bind)(function(){
     Function.prototype.bind = () => {
-        let that = this;
-        let arg = arguments[0];
-        let args = [].slice.call(arguments,1);
-        if(typeof that !== 'function'){
+        let fun = this;
+        let cxt = arguments[0];
+        let bindArgs = [].slice.call(arguments,1);
+        if(typeof fun !== 'function'){
             throw new TypeError('Fucntion.prototype.bind -'+'what is trying to be bound is not callable');
         }
-        return function (){
-            return that.apply(arg,args.concat([].prototype.slice.call(arguments)))
+        // return function (){
+        //     return fun.apply(cxt,bindArgs.concat([].prototype.slice.call(arguments)))
+        // }
+        return function (...callArgs) {
+            let allArgs = bindArgs.concat(callArgs);
+            if(this instanceof fun){
+                // 如果是 通过 new 调用的，而 new 的优先级高于 bind
+                return new fun(...allArgs);
+            }
+            return fun.call(cxt,...allArgs);
         }
     }
 })();
@@ -49,7 +57,12 @@ Function.prototype.bind = function () {
     let cxt = arguments[0];
     let args = [].slice.call(arguments,1);
     return function (){
-        self.apply(cxt,args.concat([].slice.call(arguments)));
+        let allArgs = args.concat([].slice.call(arguments));
+        if(this instanceof self){
+            // 如果是 通过 new 调用的，而 new 的优先级高于 bind
+            return new self(...allArgs);
+        }
+        return self.apply(cxt,allArgs);
     } 
 }
 ```
@@ -60,7 +73,12 @@ Function.prototype.bind = function () {
     let cxt = arguments[0] || window;
     let args = [...arguments].splice(1);
     return function () {
-        self.apply(cxt,[...args,...arguments]);
+        let allArgs = [...args,...arguments];
+        if(this instanceof self){
+            // 如果是 通过 new 调用的，而 new 的优先级高于 bind
+            return new self(...allArgs);
+        }
+        self.apply(cxt,allArgs);
     }
 }
 ```
