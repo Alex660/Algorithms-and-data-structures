@@ -181,3 +181,29 @@
       ``` 
   + 总结
     + ![1.png](https://pic.leetcode-cn.com/baa5c9b2de504917f1170fffe9304b34f12850f38068acdf96524c964264b5bc-1.png) 
+#### 其它写法
+```javascript
+// 基类
+function Base() {
+
+}
+// 派生类
+function Derived() {
+  Base.call(this);
+}
+// 将派生类的原型的原型链挂在基类的原型上
+Object.setPrototypeOf(Derived.prototype,Base.prototype);
+```
+#### Object.setPrototypeOf(obj,prototype)
++ 参数
+  + obj
+    + 要设置其原型的对象
+  + prototype
+    + 该对象的新原型(一个对象 或null)
++ Polyfill
+```javascript
+Object.setPrototypeOf = Object.setPrototypeOf || function (obj,proto) {
+  obj.__proto__ = proto;
+  return obj;
+}
+```
