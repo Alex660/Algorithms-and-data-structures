@@ -36,7 +36,7 @@
   + [数组](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/algo/%E6%95%B0%E7%BB%84_Array.md)
   + [链表](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/algo/%E9%93%BE%E8%A1%A8_linkedList.md)
   + [跳表](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/algo/%E8%B7%B3%E8%A1%A8_skiplist.md)
-  + 栈
+  + [栈](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/algo/%E6%A0%88_stack.md)
   + 队列
   + 递归
   + [排序](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/theoreticalKnowledge/BitOperation%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81Bloom%20Filter%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E3%80%81LRU%20Cache%E7%BC%93%E5%AD%98%E3%80%81Sorting%20algorithm%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.md)
