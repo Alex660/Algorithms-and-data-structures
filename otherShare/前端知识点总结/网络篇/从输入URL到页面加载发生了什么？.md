@@ -1,0 +1,19 @@
+## 从输入URL到页面加载发生了什么？
+### 解答
+1. 浏览器地址输入URL
+2. 浏览器查找当前URL是否存在缓存
+   1. 并比较缓存是否过期
+3. DNS解析URL对应IP
+4. 根据IP建立TCP连接
+   1. 三次握手
+5. HTTP/HTTPS发起请求
+6. 服务器处理请求，浏览器接收HTTP响应
+7. 渲染页面，构建DOM树
+8. 关闭TCP连接
+   1. 四次挥手
+### 追魂夺命连环问
++ [缓存相关知识](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/otherShare/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/other/%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98.md)
++ [DNS解析过程](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/otherShare/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/DNS.md)
++ [TCP](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/otherShare/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/TCP.md)
++ [请求状态码](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/otherShare/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/%E8%AF%B7%E6%B1%82%E7%8A%B6%E6%80%81%E7%A0%81.md)
++ [优化网页手段](https://github.com/Alex660/Algorithms-and-data-structures/blob/master/otherShare/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/other/%E4%BC%98%E5%8C%96%E7%BD%91%E9%A1%B5%E6%89%8B%E6%AE%B5.md)
